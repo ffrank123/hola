@@ -58,7 +58,7 @@ class CartControllerTest extends TestCase
         $this->withSession(['cart' => [
             ['type' => 'service', 'id' => 1, 'title' => 'Kayak', 'price' => 100, 'quantity' => 1]
         ]]);
-        $response = $this->postJson('/api/cart/clear');
+        $response = $this->postJson('/cart/clear');
         $response->assertStatus(200)
             ->assertJsonFragment(['cart' => []]);
     }

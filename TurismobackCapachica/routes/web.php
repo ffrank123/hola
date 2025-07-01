@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\Publico\CartController;
 
 
 /*
@@ -28,6 +29,8 @@ Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallba
 Route::get('/reset-password/{token}', function ($token) {
     return response()->json(['token' => $token]);
 })->name('password.reset');
+
+Route::post('cart/clear', [CartController::class, 'clear']);
 
 
 
