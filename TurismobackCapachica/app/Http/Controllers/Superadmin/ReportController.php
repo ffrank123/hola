@@ -23,10 +23,12 @@ class ReportController extends Controller
 
     public function usageMetrics()
     {
+        $isSqlite = \DB::connection()->getDriverName() === 'sqlite';
+        $dateExpr = $isSqlite ? \DB::raw("strftime('%Y-%m', created_at) as month") : \DB::raw("DATE_FORMAT(created_at,'%Y-%m') as month");
         return response()->json([
-          'monthly_reservations' => Reservation::select(DB::raw("DATE_FORMAT(created_at,'%Y-%m') as month"), DB::raw('count(*) as total'))
+          'monthly_reservations' => \App\Models\Reservation::select($dateExpr, \DB::raw('count(*) as total'))
                                           ->groupBy('month')->get(),
-          'active_users'        => DB::table('users')->where('last_login_at','>=',now()->subMonth())->count(),
+          'active_users'        => \DB::table('users')->where('last_login_at','>=',now()->subMonth())->count(),
         ]);
     }
 }

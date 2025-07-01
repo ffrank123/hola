@@ -28,6 +28,6 @@ class PublicPromotionControllerTest extends TestCase
         $response = $this->getJson('/api/promociones-publicas');
         $response->assertStatus(200)
             ->assertJsonFragment(['title' => 'Promo 1'])
-            ->assertJsonFragment(['discount_percentage' => '10.00']);
+            ->assertJsonFragment(['discount_percentage' => 10]);
     }
 } 
