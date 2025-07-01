@@ -15,6 +15,7 @@ class TuristaBookingControllerTest extends TestCase
     public function test_index_returns_user_bookings()
     {
         $user = User::factory()->create();
+        $user->assignRole('turista');
         Booking::factory()->count(2)->create(['user_id' => $user->id]);
         $this->actingAs($user, 'sanctum');
         $response = $this->getJson('/api/turista/bookings');
@@ -24,6 +25,7 @@ class TuristaBookingControllerTest extends TestCase
     public function test_show_returns_booking_detail()
     {
         $user = User::factory()->create();
+        $user->assignRole('turista');
         $booking = Booking::factory()->create(['user_id' => $user->id]);
         $this->actingAs($user, 'sanctum');
         $response = $this->getJson('/api/turista/bookings/' . $booking->id);
@@ -33,6 +35,7 @@ class TuristaBookingControllerTest extends TestCase
     public function test_pay_booking()
     {
         $user = User::factory()->create();
+        $user->assignRole('turista');
         $booking = Booking::factory()->create(['user_id' => $user->id, 'status' => 'confirmed']);
         $payment = PaymentMethod::factory()->create(['user_id' => $user->id]);
         $this->actingAs($user, 'sanctum');

@@ -115,6 +115,16 @@ Route::middleware('web')->group(function () {
     Route::delete('cart', [CartController::class, 'clear']);
 });
 
+// Carrito para API (para tests)
+Route::prefix('api')->group(function () {
+    Route::get('cart',                      [CartController::class,      'index']);
+    Route::get('cart/summary',              [CartController::class,      'summary']);
+    Route::post('cart/service/{serviceId}',  [CartController::class,      'addService']);
+    Route::post('cart/promotion/{promoId}',  [CartController::class,      'addPromotion']);
+    Route::delete('cart/{type}/{id}',          [CartController::class,      'remove']);
+    Route::post('cart/clear', [CartController::class, 'clear']);
+});
+
 // Selectores de UI
 Route::get('locations',  [LocationController::class, 'index']);
 Route::get('categories', [CategoryController::class, 'index']);

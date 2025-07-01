@@ -16,6 +16,7 @@ class TuristaPromotionControllerTest extends TestCase
     public function test_index_returns_active_promotions_with_services()
     {
         $user = User::factory()->create();
+        $user->assignRole('turista');
         $service = Service::factory()->create(['price' => 100]);
         $promo = Promotion::factory()->create([
             'title' => 'Promo 1',

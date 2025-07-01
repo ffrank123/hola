@@ -15,6 +15,7 @@ class TuristaReviewControllerTest extends TestCase
     public function test_index_returns_user_reviews()
     {
         $user = User::factory()->create();
+        $user->assignRole('turista');
         Review::factory()->count(2)->create(['user_id' => $user->id]);
         $this->actingAs($user, 'sanctum');
         $response = $this->getJson('/api/turista/reviews');
@@ -24,6 +25,7 @@ class TuristaReviewControllerTest extends TestCase
     public function test_store_creates_review()
     {
         $user = User::factory()->create();
+        $user->assignRole('turista');
         $service = Service::factory()->create();
         $this->actingAs($user, 'sanctum');
         $payload = [
@@ -38,6 +40,7 @@ class TuristaReviewControllerTest extends TestCase
     public function test_show_returns_review_detail()
     {
         $user = User::factory()->create();
+        $user->assignRole('turista');
         $review = Review::factory()->create(['user_id' => $user->id]);
         $this->actingAs($user, 'sanctum');
         $response = $this->getJson('/api/turista/reviews/' . $review->id);
@@ -47,6 +50,7 @@ class TuristaReviewControllerTest extends TestCase
     public function test_update_modifies_review()
     {
         $user = User::factory()->create();
+        $user->assignRole('turista');
         $review = Review::factory()->create(['user_id' => $user->id]);
         $this->actingAs($user, 'sanctum');
         $payload = [
@@ -60,6 +64,7 @@ class TuristaReviewControllerTest extends TestCase
     public function test_destroy_deletes_review()
     {
         $user = User::factory()->create();
+        $user->assignRole('turista');
         $review = Review::factory()->create(['user_id' => $user->id]);
         $this->actingAs($user, 'sanctum');
         $response = $this->deleteJson('/api/turista/reviews/' . $review->id);

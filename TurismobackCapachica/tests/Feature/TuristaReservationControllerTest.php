@@ -16,6 +16,7 @@ class TuristaReservationControllerTest extends TestCase
     public function test_index_returns_user_reservations()
     {
         $user = User::factory()->create();
+        $user->assignRole('turista');
         Reservation::factory()->count(2)->create(['user_id' => $user->id]);
         $this->actingAs($user, 'sanctum');
         $response = $this->getJson('/api/turista/reservations');
@@ -25,6 +26,7 @@ class TuristaReservationControllerTest extends TestCase
     public function test_store_creates_reservation()
     {
         $user = User::factory()->create();
+        $user->assignRole('turista');
         $service = Service::factory()->create();
         $this->actingAs($user, 'sanctum');
         $payload = [
@@ -39,6 +41,7 @@ class TuristaReservationControllerTest extends TestCase
     public function test_show_returns_reservation_detail()
     {
         $user = User::factory()->create();
+        $user->assignRole('turista');
         $reservation = Reservation::factory()->create(['user_id' => $user->id]);
         $this->actingAs($user, 'sanctum');
         $response = $this->getJson('/api/turista/reservations/' . $reservation->id);
@@ -48,6 +51,7 @@ class TuristaReservationControllerTest extends TestCase
     public function test_update_modifies_reservation()
     {
         $user = User::factory()->create();
+        $user->assignRole('turista');
         $reservation = Reservation::factory()->create(['user_id' => $user->id]);
         $this->actingAs($user, 'sanctum');
         $payload = [
@@ -61,6 +65,7 @@ class TuristaReservationControllerTest extends TestCase
     public function test_destroy_deletes_reservation()
     {
         $user = User::factory()->create();
+        $user->assignRole('turista');
         $reservation = Reservation::factory()->create(['user_id' => $user->id]);
         $this->actingAs($user, 'sanctum');
         $response = $this->deleteJson('/api/turista/reservations/' . $reservation->id);
@@ -70,6 +75,7 @@ class TuristaReservationControllerTest extends TestCase
     public function test_pay_reservation()
     {
         $user = User::factory()->create();
+        $user->assignRole('turista');
         $reservation = Reservation::factory()->create(['user_id' => $user->id, 'status' => 'confirmed']);
         $this->actingAs($user, 'sanctum');
         $response = $this->postJson('/api/turista/reservations/' . $reservation->id . '/pay');

@@ -16,7 +16,8 @@ class RolesSeeder extends Seeder
         $roles = ['superadmin', 'emprendedor', 'turista'];
 
         foreach ($roles as $role) {
-            Role::firstOrCreate(['name' => $role]);
+            Role::firstOrCreate(['name' => $role, 'guard_name' => 'web']);
+            Role::firstOrCreate(['name' => $role, 'guard_name' => 'sanctum']);
         }
 
         // Verificar si el usuario ya existe, si no lo crea
