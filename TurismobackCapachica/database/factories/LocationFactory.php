@@ -13,6 +13,7 @@ class LocationFactory extends Factory
     {
         return [
             'name' => $this->faker->city(),
+            'type' => 'comunidad',
             'description' => $this->faker->sentence(),
             'latitude' => $this->faker->latitude(),
             'longitude' => $this->faker->longitude(),

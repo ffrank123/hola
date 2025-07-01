@@ -16,7 +16,7 @@ class TuristaBookingControllerTest extends TestCase
     {
         $user = User::factory()->create();
         Booking::factory()->count(2)->create(['user_id' => $user->id]);
-        $this->actingAs($user, 'api');
+        $this->actingAs($user, 'sanctum');
         $response = $this->getJson('/api/turista/bookings');
         $response->assertStatus(200)->assertJsonStructure(['data']);
     }
@@ -25,7 +25,7 @@ class TuristaBookingControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $booking = Booking::factory()->create(['user_id' => $user->id]);
-        $this->actingAs($user, 'api');
+        $this->actingAs($user, 'sanctum');
         $response = $this->getJson('/api/turista/bookings/' . $booking->id);
         $response->assertStatus(200)->assertJsonFragment(['id' => $booking->id]);
     }
@@ -35,7 +35,7 @@ class TuristaBookingControllerTest extends TestCase
         $user = User::factory()->create();
         $booking = Booking::factory()->create(['user_id' => $user->id, 'status' => 'confirmed']);
         $payment = PaymentMethod::factory()->create(['user_id' => $user->id]);
-        $this->actingAs($user, 'api');
+        $this->actingAs($user, 'sanctum');
         $response = $this->postJson('/api/turista/bookings/' . $booking->id . '/pay', [
             'payment_method_id' => $payment->id
         ]);

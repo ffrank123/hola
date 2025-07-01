@@ -25,7 +25,7 @@ class TuristaPromotionControllerTest extends TestCase
             'end_date' => Carbon::now()->addDay(),
         ]);
         $promo->services()->attach($service);
-        $this->actingAs($user, 'api');
+        $this->actingAs($user, 'sanctum');
         $response = $this->getJson('/api/turista/promotions');
         $response->assertStatus(200)->assertJsonFragment(['title' => 'Promo 1']);
     }
