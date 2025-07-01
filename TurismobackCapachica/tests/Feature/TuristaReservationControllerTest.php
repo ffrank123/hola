@@ -25,13 +25,13 @@ class TuristaReservationControllerTest extends TestCase
 
     public function test_store_creates_reservation()
     {
-        $user = User::factory()->create();
+        $user = \App\Models\User::factory()->create();
         $user->assignRole('turista');
-        $service = Service::factory()->create();
+        $service = \App\Models\Service::factory()->create();
         $this->actingAs($user, 'sanctum');
         $payload = [
             'service_id' => $service->id,
-            'reservation_date' => Carbon::now()->addDay()->toDateString(),
+            'reservation_date' => \Carbon\Carbon::now()->addDay()->toDateString(),
             'people_count' => 2
         ];
         $response = $this->postJson('/api/turista/reservations', $payload);

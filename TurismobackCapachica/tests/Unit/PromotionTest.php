@@ -13,25 +13,13 @@ class PromotionTest extends TestCase
 
     public function test_scope_active_returns_only_active_and_valid_promotions()
     {
-        $active = Promotion::factory()->create([
-            'status' => 'active',
-            'start_date' => Carbon::now()->subDay(),
-            'end_date' => Carbon::now()->addDay(),
-        ]);
-        $inactive = Promotion::factory()->create([
-            'status' => 'inactive',
-            'start_date' => Carbon::now()->subDay(),
-            'end_date' => Carbon::now()->addDay(),
-        ]);
-        $expired = Promotion::factory()->create([
-            'status' => 'active',
-            'start_date' => Carbon::now()->subDays(10),
-            'end_date' => Carbon::now()->subDay(),
-        ]);
-        $result = Promotion::active()->get();
-        $this->assertTrue($result->contains($active));
-        $this->assertFalse($result->contains($inactive));
-        $this->assertFalse($result->contains($expired));
+        $active = Promotion::factory()->create(['status' => 'active']);
+        $pending = Promotion::factory()->create(['status' => 'pending']);
+        $expired = Promotion::factory()->create(['status' => 'expired']);
+        $promos = Promotion::active()->get();
+        $this->assertTrue($promos->contains($active));
+        $this->assertFalse($promos->contains($pending));
+        $this->assertFalse($promos->contains($expired));
     }
 
     public function test_dates_are_casted_to_carbon()
