@@ -60,6 +60,9 @@ pipeline {
                         cp .env.example .env
                         php artisan key:generate --ansi
                         mkdir -p build/logs
+                        apt-get update && apt-get install -y unzip git curl && \
+                        pecl install xdebug && \
+                        docker-php-ext-enable xdebug
                         chmod +x ./vendor/bin/phpunit
                         ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml --log-junit build/logs/phpunit.xml
                     '''
