@@ -123,6 +123,7 @@ Route::prefix('api')->group(function () {
     Route::post('cart/promotion/{promoId}',  [CartController::class,      'addPromotion']);
     Route::delete('cart/{type}/{id}',          [CartController::class,      'remove']);
     Route::post('cart/clear', [CartController::class, 'clear']);
+    Route::delete('cart/clear', [CartController::class, 'clear']);
 });
 
 // Selectores de UI
