@@ -10,27 +10,27 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up()
-{
-    // Cambia el ENUM para que acepte 'inactive' además de los previos
-    \DB::statement("
-        ALTER TABLE `promotions`
-        MODIFY `status`
-        ENUM('pending','active','expired','inactive')
-        NOT NULL
-        DEFAULT 'pending'
-    ");
-}
+    {
+        if (\Illuminate\Support\Facades\DB::getDriverName() === 'mysql') {
+            \Illuminate\Support\Facades\DB::statement("
+                ALTER TABLE `promotions`
+                MODIFY `status` ENUM('pending','active','expired','inactive') NOT NULL DEFAULT 'pending'
+            ");
+        }
+        // En SQLite, no hacer nada (ignorar)
+    }
+
     /**
      * Reverse the migrations.
      */
     public function down()
-{
-    \DB::statement("
-        ALTER TABLE `promotions`
-        MODIFY `status`
-        ENUM('pending','active','expired')
-        NOT NULL
-        DEFAULT 'pending'
-    ");
-}
+    {
+        if (\Illuminate\Support\Facades\DB::getDriverName() === 'mysql') {
+            \Illuminate\Support\Facades\DB::statement("
+                ALTER TABLE `promotions`
+                MODIFY `status` ENUM('pending','active','expired','inactive') NOT NULL DEFAULT 'pending'
+            ");
+        }
+        // En SQLite, no hacer nada (ignorar)
+    }
 };
