@@ -17,6 +17,7 @@ class EmprendedorPromotionControllerTest extends TestCase
     public function test_index_returns_promotions()
     {
         $user = User::factory()->create();
+        $user->assignRole('emprendedor');
         $company = Company::factory()->create(['user_id' => $user->id]);
         $promo = Promotion::factory()->create(['company_id' => $company->id]);
         $this->actingAs($user, 'sanctum');
@@ -27,6 +28,7 @@ class EmprendedorPromotionControllerTest extends TestCase
     public function test_store_creates_promotion()
     {
         $user = User::factory()->create();
+        $user->assignRole('emprendedor');
         $company = Company::factory()->create(['user_id' => $user->id]);
         $service = Service::factory()->create(['company_id' => $company->id]);
         $this->actingAs($user, 'sanctum');
@@ -45,6 +47,7 @@ class EmprendedorPromotionControllerTest extends TestCase
     public function test_show_returns_promotion_detail()
     {
         $user = User::factory()->create();
+        $user->assignRole('emprendedor');
         $company = Company::factory()->create(['user_id' => $user->id]);
         $promo = Promotion::factory()->create(['company_id' => $company->id]);
         $this->actingAs($user, 'sanctum');
@@ -55,6 +58,7 @@ class EmprendedorPromotionControllerTest extends TestCase
     public function test_update_modifies_promotion()
     {
         $user = User::factory()->create();
+        $user->assignRole('emprendedor');
         $company = Company::factory()->create(['user_id' => $user->id]);
         $promo = Promotion::factory()->create(['company_id' => $company->id]);
         $this->actingAs($user, 'sanctum');
@@ -66,6 +70,7 @@ class EmprendedorPromotionControllerTest extends TestCase
     public function test_destroy_deletes_promotion()
     {
         $user = User::factory()->create();
+        $user->assignRole('emprendedor');
         $company = Company::factory()->create(['user_id' => $user->id]);
         $promo = Promotion::factory()->create(['company_id' => $company->id]);
         $this->actingAs($user, 'sanctum');

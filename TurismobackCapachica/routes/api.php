@@ -250,61 +250,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
     // Emprendedor
-    Route::middleware('role:emprendedor')
-        ->prefix('emprendedor')
-        ->group(function () {
-            Route::post('crear-empresa', [EmprendedorController::class, 'crearEmpresa']);
-            Route::get('estado-empresa', [EmprendedorController::class, 'estadoEmpresa']);
-            Route::get('dashboard',      [EmprendedorDashboardController::class, 'overview']);
-
-
-            // Servicios
-            Route::get('servicios',                  [ServicioController::class, 'index']);
-            Route::post('servicios',                  [ServicioController::class, 'store']);
-            Route::get('servicios/{service}',           [ServicioController::class, 'show']);
-            Route::patch('servicios/{id}',             [ServicioController::class, 'update']);
-            Route::delete('servicios/{id}',             [ServicioController::class, 'destroy']);
-            Route::patch('servicios/{id}/toggle-active', [ServicioController::class, 'toggleActive']);
-
-            // Media (imágenes)
-            Route::post('servicios/{id}/media',               [ServicioController::class, 'storeMedia']);
-            Route::delete('servicios/{id}/media/{mediaId}',     [ServicioController::class, 'destroyMedia']);
-
-
-            // promociones  
-            // Emprendedor → promociones
-            Route::apiResource('promociones', PromotionController::class);
-
-
-            // Reservaciones internas
-            // Route::apiResource('reservas', EmprendedorReservationController::class);
-
-            // Calendar interno
-            Route::get('servicios/{service}/calendar',    [EmprendedorCalendarController::class, 'occupiedDates']);
-            
-            // calender actualizaciones
-
-            Route::get('service/{service}/occupied-dates', [EmprendedorCalendarController::class, 'occupiedDates']);
-
-            Route::get('personal-events', [EmprendedorCalendarController::class, 'personalEvents']);
-            Route::post('personal-events', [EmprendedorCalendarController::class, 'createPersonalEvent']);
-            Route::put('personal-events/{event}', [EmprendedorCalendarController::class, 'updatePersonalEvent']);
-            Route::delete('personal-events/{event}', [EmprendedorCalendarController::class, 'deletePersonalEvent']);
-
-            // Mensajes, blog, perfil y config
-
-            Route::apiResource('blog',     BlogController::class);
-            Route::get('perfil', [EmprendedorProfileController::class, 'show']);
-            Route::put('perfil', [EmprendedorProfileController::class, 'update']);
-            Route::get('config', [EmprendedorConfigController::class, 'show']);
-            Route::put('config', [EmprendedorConfigController::class, 'update']);
-
-            // Booking unificado
-            // Booking unificado
-            Route::get('bookings',              [EmprendedorBookingController::class, 'index']);
-            Route::get('bookings/{booking}',    [EmprendedorBookingController::class, 'show']);
-            Route::put('bookings/{booking}/status', [EmprendedorBookingController::class, 'updateStatus']);
-        });
+    Route::middleware(['auth:sanctum', 'role:emprendedor'])->prefix('emprendedor')->group(function () {
+        Route::apiResource('blogs', App\Http\Controllers\Emprendedor\BlogController::class);
+        Route::apiResource('promotions', App\Http\Controllers\Emprendedor\PromotionController::class);
+        Route::apiResource('servicios', App\Http\Controllers\Emprendedor\ServicioController::class);
+        Route::apiResource('bookings', App\Http\Controllers\Emprendedor\BookingController::class);
+        Route::put('bookings/{booking}/status', [App\Http\Controllers\Emprendedor\BookingController::class, 'updateStatus']);
+    });
 
 
 
@@ -312,35 +264,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
     // Turista
-    Route::middleware('role:turista')->prefix('turista')->group(function () {
-        Route::get('dashboard',    [TuristaDashboardController::class, 'overview']);
-        Route::get('experiencias', [TuristaExperienceController::class, 'index']);
-        Route::get('paquetes',     [TuristaPackageController::class, 'index']);
-
-        // Checkout / Booking
-        Route::post('checkout',      [CheckoutController::class, 'checkout']);
-        // Reservas
-        Route::get('bookings',      [\App\Http\Controllers\Turista\BookingController::class, 'index']);
-        Route::get('bookings/{id}', [\App\Http\Controllers\Turista\BookingController::class, 'show']);
-        Route::post('bookings/{id}/pay', [\App\Http\Controllers\Turista\BookingController::class, 'pay']);
-
-        // Métodos de Pago
-        Route::get('payment-methods', [PaymentMethodController::class, 'index']);
-        Route::post('payment-methods', [PaymentMethodController::class, 'store']);
-        Route::get('payment-methods/{id}', [PaymentMethodController::class, 'show']);
-        Route::put('payment-methods/{id}', [PaymentMethodController::class, 'update']);
-        Route::delete('payment-methods/{id}', [PaymentMethodController::class, 'destroy']);
-
-        // Perfil & métodos de pago
-        Route::get('perfil',     [TuristaProfileController::class, 'show']);
-        Route::put('perfil',     [TuristaProfileController::class, 'update']);
-        Route::apiResource('metodos-pago', PaymentMethodController::class);
-        Route::get('config',     [TuristaConfigController::class, 'show']);
-        Route::put('config',     [TuristaConfigController::class, 'update']);
-
-        // Favoritos y reseñas
-        Route::apiResource('favoritos', FavoriteController::class);
-        Route::apiResource('reseñas',   ReviewController::class);
+    Route::middleware(['auth:sanctum', 'role:turista'])->prefix('turista')->group(function () {
+        Route::apiResource('reservations', App\Http\Controllers\Turista\ReservationController::class);
+        Route::apiResource('reviews', App\Http\Controllers\Turista\ReviewController::class);
+        Route::apiResource('promotions', App\Http\Controllers\Turista\PromotionController::class)->only(['index']);
+        Route::apiResource('bookings', App\Http\Controllers\Turista\BookingController::class);
+        Route::post('bookings/{booking}/pay', [App\Http\Controllers\Turista\BookingController::class, 'pay']);
+        Route::post('reservations/{reservation}/pay', [App\Http\Controllers\Turista\ReservationController::class, 'pay']);
     });
 });
 
@@ -350,3 +280,12 @@ Route::middleware('auth:sanctum')->group(function () {
 // checkout
 Route::middleware(['auth:sanctum', 'role:turista'])
     ->post('checkout', [\App\Http\Controllers\Publico\CheckoutController::class, 'checkout']);
+
+// Ruta para calendar de servicios (usada en CalendarControllerTest)
+Route::get('services/{service}/calendar', [App\Http\Controllers\Publico\CalendarController::class, 'occupiedDates']);
+
+// --- RUTAS SUPERADMIN REPORTS ---
+Route::middleware(['auth:sanctum', 'role:superadmin'])->prefix('superadmin')->group(function () {
+    Route::get('reports/sales-by', [App\Http\Controllers\Superadmin\ReportController::class, 'salesBy']);
+    Route::get('reports/usage-metrics', [App\Http\Controllers\Superadmin\ReportController::class, 'usageMetrics']);
+});

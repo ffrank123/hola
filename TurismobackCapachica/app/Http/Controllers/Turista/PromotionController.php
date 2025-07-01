@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Promotion;
 use Illuminate\Http\Request;
 
-class PackageController extends Controller
+class PromotionController extends Controller
 {
     public function index(Request $request)
     {

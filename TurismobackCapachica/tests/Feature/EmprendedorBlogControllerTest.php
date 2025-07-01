@@ -15,6 +15,7 @@ class EmprendedorBlogControllerTest extends TestCase
     public function test_index_returns_own_posts()
     {
         $user = User::factory()->create();
+        $user->assignRole('emprendedor');
         $company = Company::factory()->create(['user_id' => $user->id]);
         Blog::factory()->count(2)->create(['company_id' => $company->id]);
         $this->actingAs($user, 'sanctum');
@@ -25,6 +26,7 @@ class EmprendedorBlogControllerTest extends TestCase
     public function test_store_creates_post()
     {
         $user = User::factory()->create();
+        $user->assignRole('emprendedor');
         $company = Company::factory()->create(['user_id' => $user->id]);
         $this->actingAs($user, 'sanctum');
         $payload = [
@@ -38,6 +40,7 @@ class EmprendedorBlogControllerTest extends TestCase
     public function test_show_returns_post_detail()
     {
         $user = User::factory()->create();
+        $user->assignRole('emprendedor');
         $company = Company::factory()->create(['user_id' => $user->id]);
         $post = Blog::factory()->create(['company_id' => $company->id]);
         $this->actingAs($user, 'sanctum');
@@ -48,6 +51,7 @@ class EmprendedorBlogControllerTest extends TestCase
     public function test_update_modifies_post()
     {
         $user = User::factory()->create();
+        $user->assignRole('emprendedor');
         $company = Company::factory()->create(['user_id' => $user->id]);
         $post = Blog::factory()->create(['company_id' => $company->id]);
         $this->actingAs($user, 'sanctum');
@@ -59,6 +63,7 @@ class EmprendedorBlogControllerTest extends TestCase
     public function test_destroy_deletes_post()
     {
         $user = User::factory()->create();
+        $user->assignRole('emprendedor');
         $company = Company::factory()->create(['user_id' => $user->id]);
         $post = Blog::factory()->create(['company_id' => $company->id]);
         $this->actingAs($user, 'sanctum');

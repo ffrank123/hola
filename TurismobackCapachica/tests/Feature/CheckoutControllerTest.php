@@ -16,6 +16,7 @@ class CheckoutControllerTest extends TestCase
     public function user_can_checkout_with_service_cart()
     {
         $user = User::factory()->create();
+        $user->assignRole('turista');
         $service = Service::factory()->create(['price' => 100]);
         $cart = [
             [

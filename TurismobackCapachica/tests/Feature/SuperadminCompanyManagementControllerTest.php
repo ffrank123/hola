@@ -27,7 +27,7 @@ class SuperadminCompanyManagementControllerTest extends TestCase
         $superadmin->assignRole('superadmin');
         $company = Company::factory()->create(['status' => 'pendiente']);
         $this->actingAs($superadmin, 'sanctum');
-        $response = $this->postJson('/api/superadmin/companies/' . $company->id . '/approve');
+        $response = $this->putJson('/api/superadmin/companies/' . $company->id . '/approve');
         $response->assertStatus(200)->assertJsonFragment(['message' => 'Empresa aprobada']);
     }
 
@@ -37,7 +37,7 @@ class SuperadminCompanyManagementControllerTest extends TestCase
         $superadmin->assignRole('superadmin');
         $company = Company::factory()->create(['status' => 'pendiente']);
         $this->actingAs($superadmin, 'sanctum');
-        $response = $this->postJson('/api/superadmin/companies/' . $company->id . '/reject');
+        $response = $this->putJson('/api/superadmin/companies/' . $company->id . '/reject');
         $response->assertStatus(200)->assertJsonFragment(['message' => 'Empresa rechazada']);
     }
 } 

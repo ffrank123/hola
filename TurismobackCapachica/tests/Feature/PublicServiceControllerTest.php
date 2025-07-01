@@ -16,20 +16,20 @@ class PublicServiceControllerTest extends TestCase
     {
         $category = Category::factory()->create(['name' => 'Aventura']);
         $service = Service::factory()->create([
-            'name' => 'Kayak',
+            'title' => 'Kayak',
             'status' => 'active',
             'category_id' => $category->id,
         ]);
         $inactive = Service::factory()->create([
-            'name' => 'Inactive',
-            'status' => 'inactive',
+            'title' => 'Inactive',
+            'status' => 'paused',
             'category_id' => $category->id,
         ]);
 
         $response = $this->getJson('/api/servicios-publicos');
         $response->assertStatus(200)
-            ->assertJsonFragment(['name' => 'Kayak'])
-            ->assertJsonMissing(['name' => 'Inactive']);
+            ->assertJsonFragment(['title' => 'Kayak'])
+            ->assertJsonMissing(['title' => 'Inactive']);
     }
 
     /** @test */
@@ -37,13 +37,13 @@ class PublicServiceControllerTest extends TestCase
     {
         $category = Category::factory()->create(['name' => 'Aventura']);
         $service = Service::factory()->create([
-            'name' => 'Kayak',
+            'title' => 'Kayak',
             'status' => 'active',
             'category_id' => $category->id,
         ]);
 
         $response = $this->getJson('/api/servicios-publicos/' . $service->id);
         $response->assertStatus(200)
-            ->assertJsonFragment(['name' => 'Kayak']);
+            ->assertJsonFragment(['title' => 'Kayak']);
     }
 } 

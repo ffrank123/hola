@@ -18,7 +18,7 @@ class SuperadminUserManagementControllerTest extends TestCase
             $user->assignRole('turista');
         });
         $this->actingAs($superadmin, 'sanctum');
-        $response = $this->getJson('/api/superadmin/users');
+        $response = $this->getJson('/api/superadmin/turistas');
         $response->assertStatus(200);
     }
 
@@ -29,7 +29,7 @@ class SuperadminUserManagementControllerTest extends TestCase
         $turista = User::factory()->create();
         $turista->assignRole('turista');
         $this->actingAs($superadmin, 'sanctum');
-        $response = $this->getJson('/api/superadmin/users/' . $turista->id);
+        $response = $this->getJson('/api/superadmin/turistas/' . $turista->id);
         $response->assertStatus(200);
     }
 
@@ -40,7 +40,7 @@ class SuperadminUserManagementControllerTest extends TestCase
         $turista = User::factory()->create(['estado' => 'activo']);
         $turista->assignRole('turista');
         $this->actingAs($superadmin, 'sanctum');
-        $response = $this->putJson('/api/superadmin/users/' . $turista->id . '/status', ['estado' => 'suspendido']);
+        $response = $this->putJson('/api/superadmin/turistas/' . $turista->id . '/status', ['estado' => 'suspendido']);
         $response->assertStatus(200)->assertJsonFragment(['estado' => 'suspendido']);
     }
 
@@ -51,7 +51,7 @@ class SuperadminUserManagementControllerTest extends TestCase
         $turista = User::factory()->create();
         $turista->assignRole('turista');
         $this->actingAs($superadmin, 'sanctum');
-        $response = $this->postJson('/api/superadmin/users/' . $turista->id . '/message', ['mensaje' => 'Hola!']);
+        $response = $this->postJson('/api/superadmin/turistas/' . $turista->id . '/mensaje', ['mensaje' => 'Hola!']);
         $response->assertStatus(200)->assertJsonFragment(['message' => 'Mensaje enviado correctamente.']);
     }
 } 

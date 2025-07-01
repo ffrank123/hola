@@ -17,6 +17,7 @@ class EmprendedorServicioControllerTest extends TestCase
     public function test_index_returns_own_services()
     {
         $user = User::factory()->create();
+        $user->assignRole('emprendedor');
         $company = Company::factory()->create(['user_id' => $user->id, 'status' => 'aprobada']);
         Service::factory()->count(2)->create(['company_id' => $company->id]);
         $this->actingAs($user, 'sanctum');
@@ -27,16 +28,26 @@ class EmprendedorServicioControllerTest extends TestCase
     public function test_store_creates_service()
     {
         $user = User::factory()->create();
+        $user->assignRole('emprendedor');
         $company = Company::factory()->create(['user_id' => $user->id, 'status' => 'aprobada']);
         $category = Category::factory()->create();
         $location = Location::factory()->create();
         $this->actingAs($user, 'sanctum');
         $payload = [
-            'title' => 'Servicio Test',
-            'description' => 'Desc',
-            'price' => 100,
+            'company_id' => $company->id,
             'category_id' => $category->id,
             'location_id' => $location->id,
+            'title' => 'Servicio Test',
+            'slug' => 'servicio-test',
+            'description' => 'Descripción de prueba',
+            'ubicacion_detallada' => 'Dirección',
+            'price' => 100,
+            'policy_cancellation' => 'Flexible',
+            'capacity' => 5,
+            'duration' => '2h',
+            'status' => 'active',
+            'published_at' => now(),
+            'is_active' => true
         ];
         $response = $this->postJson('/api/emprendedor/servicios', $payload);
         $response->assertStatus(201)->assertJsonFragment(['message' => 'Servicio creado exitosamente.']);
@@ -45,6 +56,7 @@ class EmprendedorServicioControllerTest extends TestCase
     public function test_show_returns_service_detail()
     {
         $user = User::factory()->create();
+        $user->assignRole('emprendedor');
         $company = Company::factory()->create(['user_id' => $user->id, 'status' => 'aprobada']);
         $service = Service::factory()->create(['company_id' => $company->id]);
         $this->actingAs($user, 'sanctum');
@@ -55,6 +67,7 @@ class EmprendedorServicioControllerTest extends TestCase
     public function test_update_modifies_service()
     {
         $user = User::factory()->create();
+        $user->assignRole('emprendedor');
         $company = Company::factory()->create(['user_id' => $user->id, 'status' => 'aprobada']);
         $service = Service::factory()->create(['company_id' => $company->id]);
         $this->actingAs($user, 'sanctum');
@@ -66,6 +79,7 @@ class EmprendedorServicioControllerTest extends TestCase
     public function test_destroy_deletes_service()
     {
         $user = User::factory()->create();
+        $user->assignRole('emprendedor');
         $company = Company::factory()->create(['user_id' => $user->id, 'status' => 'aprobada']);
         $service = Service::factory()->create(['company_id' => $company->id]);
         $this->actingAs($user, 'sanctum');
