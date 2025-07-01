@@ -116,7 +116,7 @@ Route::middleware('web')->group(function () {
 });
 
 // Carrito para API (para tests)
-Route::prefix('api')->group(function () {
+Route::prefix('api')->middleware('web')->group(function () {
     Route::get('cart',                      [CartController::class,      'index']);
     Route::get('cart/summary',              [CartController::class,      'summary']);
     Route::post('cart/service/{serviceId}',  [CartController::class,      'addService']);
