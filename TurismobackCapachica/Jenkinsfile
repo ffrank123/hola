@@ -91,7 +91,7 @@ pipeline {
                             sonar-scanner \
                               -Dsonar.projectKey=${SONAR_PROJECTKEY} \
                               -Dsonar.sources=app \
-                              -Dsonar.php.coverage.reportPaths=build/logs/phpunit.xml \
+                              -Dsonar.php.coverage.reportPaths=build/logs/clover.xml \
                               -Dsonar.login=${SONAR_TOKEN} \
                               -Dsonar.host.url=http://host.docker.internal:9000
                         '''
