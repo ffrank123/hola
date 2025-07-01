@@ -12,6 +12,7 @@ return new class extends Migration {
             $table->foreignId('service_id')->constrained()->onDelete('cascade');
             $table->tinyInteger('rating')->unsigned();
             $table->text('comment');
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->text('response')->nullable();
             $table->timestamp('published_at')->nullable();      
             $table->timestamps();

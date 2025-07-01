@@ -9,6 +9,7 @@ return new class extends Migration {
         Schema::create('portals', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('description')->nullable();
             $table->string('subdomain')->unique();
             $table->string('default_language')->default('es');
             $table->string('logo_url')->nullable();

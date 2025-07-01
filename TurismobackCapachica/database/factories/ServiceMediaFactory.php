@@ -14,7 +14,7 @@ class ServiceMediaFactory extends Factory
     {
         return [
             'service_id' => Service::factory(),
-            'media_url' => $this->faker->imageUrl(),
+            'url' => $this->faker->imageUrl(),
             'type' => 'image',
         ];
     }

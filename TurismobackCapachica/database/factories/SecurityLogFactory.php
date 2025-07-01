@@ -14,7 +14,7 @@ class SecurityLogFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'action' => $this->faker->word(),
+            'event' => $this->faker->word(),
             'ip_address' => $this->faker->ipv4(),
             'created_at' => now(),
         ];

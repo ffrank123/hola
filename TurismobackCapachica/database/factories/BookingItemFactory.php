@@ -17,7 +17,8 @@ class BookingItemFactory extends Factory
             'booking_id' => Booking::factory(),
             'service_id' => Service::factory(),
             'quantity' => $this->faker->numberBetween(1, 5),
-            'price' => $this->faker->randomFloat(2, 10, 500),
+            'price_before' => $this->faker->randomFloat(2, 10, 500),
+            'price_after' => $this->faker->randomFloat(2, 10, 500),
         ];
     }
 } 

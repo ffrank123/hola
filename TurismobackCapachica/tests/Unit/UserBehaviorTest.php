@@ -20,11 +20,13 @@ class UserBehaviorTest extends TestCase
             'viewed_services' => json_encode([1,2]),
             'clicked_services' => json_encode([3]),
             'reserved_services' => json_encode([4,5]),
+            'action' => 'some_action',
         ]);
         $this->assertInstanceOf(User::class, $behavior->user);
         $this->assertIsArray($behavior->preferred_categories);
         $this->assertIsArray($behavior->viewed_services);
         $this->assertIsArray($behavior->clicked_services);
         $this->assertIsArray($behavior->reserved_services);
+        $this->assertEquals('some_action', $behavior->action);
     }
 } 

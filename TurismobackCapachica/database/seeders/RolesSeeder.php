@@ -13,11 +13,15 @@ class RolesSeeder extends Seeder
     public function run(): void
     {
         // Crear roles si no existen
-        $roles = ['superadmin', 'emprendedor', 'turista'];
-
+        $roles = ['superadmin', 'turista', 'emprendedor'];
+        $guards = ['web', 'sanctum'];
         foreach ($roles as $role) {
-            Role::firstOrCreate(['name' => $role, 'guard_name' => 'web']);
-            Role::firstOrCreate(['name' => $role, 'guard_name' => 'sanctum']);
+            foreach ($guards as $guard) {
+                \Spatie\Permission\Models\Role::firstOrCreate([
+                    'name' => $role,
+                    'guard_name' => $guard
+                ]);
+            }
         }
 
         // Verificar si el usuario ya existe, si no lo crea

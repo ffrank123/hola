@@ -9,6 +9,7 @@ return new class extends Migration {
         Schema::create('user_behaviors', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('action')->nullable();
             $table->foreignId('last_seen_service_id')->nullable()->constrained('services')->nullOnDelete();
             $table->json('preferred_categories')->nullable();
             $table->json('viewed_services')->nullable();

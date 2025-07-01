@@ -19,6 +19,7 @@ class Location extends Model
 
     protected $casts = [
       'galeria' => 'array',
+      'images' => 'array',
     ];
 
    public function companies()
