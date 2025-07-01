@@ -7,9 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::table('messages', function (Blueprint $table) {
-            $table->foreignId('company_id')->nullable()->constrained('companies')->onDelete('set null')->after('receiver_id');
-        });
+        // (Archivo vacío, ya no es necesario agregar company_id porque ya existe en la migración principal)
     }
 
     public function down(): void

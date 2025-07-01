@@ -14,8 +14,8 @@ return new class extends Migration
             $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->dateTime('start_time');
-            $table->dateTime('end_time');
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
             $table->string('status')->default('pendiente');
             $table->timestamps();
         });

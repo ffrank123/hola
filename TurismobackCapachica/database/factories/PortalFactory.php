@@ -15,6 +15,7 @@ class PortalFactory extends Factory
             'name' => $this->faker->domainName(),
             'description' => $this->faker->sentence(),
             'status' => 'active',
+            'subdomain' => $this->faker->unique()->domainWord,
         ];
     }
 } 

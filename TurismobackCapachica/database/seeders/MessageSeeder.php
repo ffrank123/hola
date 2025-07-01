@@ -38,19 +38,21 @@ class MessageSeeder extends Seeder
 
         // 2. Ahora sí podemos insertar mensajes sin romper la FK
         Message::firstOrCreate([
+            'user_id'    => $admin->id,
             'sender_id'   => $admin->id,
             'receiver_id' => $tourist->id,
             'company_id'  => 1,
-            'message'     => 'Hola, ¿podrías brindarme más información sobre tus servicios?',
+            'content'     => 'Hola, ¿podrías brindarme más información sobre tus servicios?',
         ], [
             'read'        => false,
         ]);
 
         Message::firstOrCreate([
+            'user_id'    => $tourist->id,
             'sender_id'   => $tourist->id,
             'receiver_id' => $admin->id,
             'company_id'  => 1,
-            'message'     => 'Claro, ¿qué quieres saber exactamente?',
+            'content'     => 'Claro, ¿qué quieres saber exactamente?',
         ], [
             'read'        => true,
         ]);

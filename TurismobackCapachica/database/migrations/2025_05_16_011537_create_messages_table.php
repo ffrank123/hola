@@ -8,9 +8,11 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('company_id')->nullable()->constrained('companies')->nullOnDelete();
             $table->foreignId('sender_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('receiver_id')->constrained('users')->onDelete('cascade');
-            $table->text('message');
+            $table->text('content');
             $table->boolean('read')->default(false);
             $table->timestamps();
         });
