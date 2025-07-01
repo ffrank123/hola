@@ -18,8 +18,7 @@ class ReviewFactory extends Factory
             'service_id' => Service::factory(),
             'rating' => $this->faker->numberBetween(1, 5),
             'comment' => $this->faker->sentence(),
-            'response' => null,
-            'published_at' => now(),
+            'status' => 'approved',
         ];
     }
 } 

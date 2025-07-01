@@ -22,7 +22,7 @@ class ServiceFactory extends Factory
             'slug' => $this->faker->slug(),
             'description' => $this->faker->paragraph(),
             'ubicacion_detallada' => $this->faker->address(),
-            'price' => $this->faker->randomFloat(2, 10, 500),
+            'price' => $this->faker->randomFloat(2, 50, 1000),
             'policy_cancellation' => $this->faker->sentence(),
             'capacity' => $this->faker->numberBetween(1, 20),
             'duration' => $this->faker->word(),

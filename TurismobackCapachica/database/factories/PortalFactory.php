@@ -2,20 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\Location;
+use App\Models\Portal;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class LocationFactory extends Factory
+class PortalFactory extends Factory
 {
-    protected $model = Location::class;
+    protected $model = Portal::class;
 
     public function definition()
     {
         return [
-            'name' => $this->faker->city(),
+            'name' => $this->faker->domainName(),
             'description' => $this->faker->sentence(),
-            'latitude' => $this->faker->latitude(),
-            'longitude' => $this->faker->longitude(),
             'status' => 'active',
         ];
     }
