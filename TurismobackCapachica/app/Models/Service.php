@@ -5,6 +5,7 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 // modelo trait para auditar
 use OwenIt\Auditing\Contracts\Auditable;
@@ -12,7 +13,7 @@ use OwenIt\Auditing\Auditable as AuditableTrait;
 
 class Service extends Model implements Auditable
 {
-  use AuditableTrait;
+  use AuditableTrait, HasFactory;
 
   protected $fillable = [
     'company_id',

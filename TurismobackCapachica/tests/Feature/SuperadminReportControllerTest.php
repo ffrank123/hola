@@ -12,7 +12,8 @@ class SuperadminReportControllerTest extends TestCase
 
     public function test_sales_by_returns_data()
     {
-        $superadmin = User::factory()->create(['role' => 'superadmin']);
+        $superadmin = User::factory()->create();
+        $superadmin->assignRole('superadmin');
         $this->actingAs($superadmin, 'sanctum');
         $response = $this->getJson('/api/superadmin/reports/sales-by');
         $response->assertStatus(200);
@@ -20,7 +21,8 @@ class SuperadminReportControllerTest extends TestCase
 
     public function test_usage_metrics_returns_data()
     {
-        $superadmin = User::factory()->create(['role' => 'superadmin']);
+        $superadmin = User::factory()->create();
+        $superadmin->assignRole('superadmin');
         $this->actingAs($superadmin, 'sanctum');
         $response = $this->getJson('/api/superadmin/reports/usage-metrics');
         $response->assertStatus(200);

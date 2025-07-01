@@ -13,7 +13,8 @@ class SuperadminCompanyManagementControllerTest extends TestCase
 
     public function test_pending_lists_pending_companies()
     {
-        $superadmin = User::factory()->create(['role' => 'superadmin']);
+        $superadmin = User::factory()->create();
+        $superadmin->assignRole('superadmin');
         Company::factory()->count(2)->create(['status' => 'pendiente']);
         $this->actingAs($superadmin, 'sanctum');
         $response = $this->getJson('/api/superadmin/companies/pending');
@@ -22,7 +23,8 @@ class SuperadminCompanyManagementControllerTest extends TestCase
 
     public function test_approve_company()
     {
-        $superadmin = User::factory()->create(['role' => 'superadmin']);
+        $superadmin = User::factory()->create();
+        $superadmin->assignRole('superadmin');
         $company = Company::factory()->create(['status' => 'pendiente']);
         $this->actingAs($superadmin, 'sanctum');
         $response = $this->postJson('/api/superadmin/companies/' . $company->id . '/approve');
@@ -31,7 +33,8 @@ class SuperadminCompanyManagementControllerTest extends TestCase
 
     public function test_reject_company()
     {
-        $superadmin = User::factory()->create(['role' => 'superadmin']);
+        $superadmin = User::factory()->create();
+        $superadmin->assignRole('superadmin');
         $company = Company::factory()->create(['status' => 'pendiente']);
         $this->actingAs($superadmin, 'sanctum');
         $response = $this->postJson('/api/superadmin/companies/' . $company->id . '/reject');

@@ -13,7 +13,8 @@ class SuperadminCategoryManagementControllerTest extends TestCase
 
     public function test_index_lists_categories()
     {
-        $superadmin = User::factory()->create(['role' => 'superadmin']);
+        $superadmin = User::factory()->create();
+        $superadmin->assignRole('superadmin');
         Category::factory()->count(2)->create();
         $this->actingAs($superadmin, 'sanctum');
         $response = $this->getJson('/api/superadmin/experiencias/categorias');
@@ -22,7 +23,8 @@ class SuperadminCategoryManagementControllerTest extends TestCase
 
     public function test_store_creates_category()
     {
-        $superadmin = User::factory()->create(['role' => 'superadmin']);
+        $superadmin = User::factory()->create();
+        $superadmin->assignRole('superadmin');
         $this->actingAs($superadmin, 'sanctum');
         $payload = [
             'name' => 'Nueva Categoria',
@@ -34,7 +36,8 @@ class SuperadminCategoryManagementControllerTest extends TestCase
 
     public function test_update_modifies_category()
     {
-        $superadmin = User::factory()->create(['role' => 'superadmin']);
+        $superadmin = User::factory()->create();
+        $superadmin->assignRole('superadmin');
         $category = Category::factory()->create();
         $this->actingAs($superadmin, 'sanctum');
         $payload = ['name' => 'Actualizada', 'status' => 'inactive'];
@@ -44,7 +47,8 @@ class SuperadminCategoryManagementControllerTest extends TestCase
 
     public function test_destroy_deletes_category()
     {
-        $superadmin = User::factory()->create(['role' => 'superadmin']);
+        $superadmin = User::factory()->create();
+        $superadmin->assignRole('superadmin');
         $category = Category::factory()->create();
         $this->actingAs($superadmin, 'sanctum');
         $response = $this->deleteJson('/api/superadmin/experiencias/categorias/' . $category->id);
