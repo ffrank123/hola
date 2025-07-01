@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('personal_events', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->string('title');
             $table->text('description')->nullable();

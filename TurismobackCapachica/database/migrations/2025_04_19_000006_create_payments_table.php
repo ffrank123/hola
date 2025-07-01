@@ -10,6 +10,7 @@ return new class extends Migration {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('booking_id')->constrained('bookings')->onDelete('cascade');
+            $table->foreignId('reservation_id')->nullable()->constrained('reservations')->nullOnDelete();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->enum('method', ['stripe', 'paypal', 'transferencia', 'tarjeta_guardada']);
             $table->string('transaction_id')->nullable(); // Puede ser nulo en pagos internos

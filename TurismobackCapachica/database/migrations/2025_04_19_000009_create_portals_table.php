@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string('secondary_color')->default('#6c757d');
             $table->string('font_family')->default('Inter');
             $table->string('layout_template')->nullable();
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });
     }
