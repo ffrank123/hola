@@ -13,6 +13,7 @@ return new class extends Migration
             // Campos básicos
             $table->string('name');
             $table->enum('type', ['comunidad', 'centro_poblado']);
+            $table->text('description')->nullable();
 
             // Descripciones y metadata
             $table->text('descripcion_corta')->nullable();
