@@ -11,6 +11,8 @@ abstract class TestCase extends BaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
+        config(['database.default' => 'sqlite']);
+        config(['database.connections.sqlite.database' => ':memory:']);
         $this->artisan('migrate');
         $this->artisan('db:seed', ['--class' => 'RolesSeeder']);
     }
