@@ -1,0 +1,14 @@
+FROM jenkins/jenkins:lts-jdk17
+
+USER root
+
+# Instalar Docker y extensiones útiles para PHP builds
+RUN apt-get update && \
+    apt-get install -y docker.io php-cli unzip curl git php-mbstring php-xml php-tokenizer sqlite3 libsqlite3-dev && \
+    curl -sS https://getcomposer.org/installer | php && \
+    mv composer.phar /usr/local/bin/composer
+
+# Agrega jenkins al grupo docker para permitir ejecutar docker dentro del contenedor
+RUN groupadd -g 999 docker || true && usermod -aG docker jenkins
+
+USER jenkins 
