@@ -64,7 +64,7 @@ pipeline {
                         pecl install xdebug && \
                         docker-php-ext-enable xdebug
                         chmod +x ./vendor/bin/phpunit
-                        ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml --log-junit build/logs/phpunit.xml
+                        XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml --log-junit build/logs/phpunit.xml
                     '''
                 }
             }
