@@ -23,11 +23,15 @@ class ReservationController extends Controller
             'people_count' => 'required|integer|min:1',
         ]);
 
+        $service = \App\Models\Service::findOrFail($request->service_id);
+        $totalAmount = $service->price * $request->people_count;
+
         $reservation = Reservation::create([
             'user_id' => Auth::id(),
             'service_id' => $request->service_id,
             'reservation_date' => $request->reservation_date,
             'people_count' => $request->people_count,
+            'total_amount' => $totalAmount,
             'status' => 'pending',
         ]);
 
