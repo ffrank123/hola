@@ -14,13 +14,13 @@ class PublicServiceControllerTest extends TestCase
     /** @test */
     public function index_returns_active_services()
     {
-        $category = Category::create(['name' => 'Aventura']);
-        $service = Service::create([
+        $category = Category::factory()->create(['name' => 'Aventura']);
+        $service = Service::factory()->create([
             'name' => 'Kayak',
             'status' => 'active',
             'category_id' => $category->id,
         ]);
-        $inactive = Service::create([
+        $inactive = Service::factory()->create([
             'name' => 'Inactive',
             'status' => 'inactive',
             'category_id' => $category->id,
@@ -35,8 +35,8 @@ class PublicServiceControllerTest extends TestCase
     /** @test */
     public function show_returns_a_service_detail()
     {
-        $category = Category::create(['name' => 'Aventura']);
-        $service = Service::create([
+        $category = Category::factory()->create(['name' => 'Aventura']);
+        $service = Service::factory()->create([
             'name' => 'Kayak',
             'status' => 'active',
             'category_id' => $category->id,

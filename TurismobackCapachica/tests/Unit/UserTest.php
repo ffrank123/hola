@@ -17,6 +17,7 @@ class UserTest extends TestCase
     public function test_scope_turistas_returns_only_turistas()
     {
         $turista = User::factory()->create();
+        $turista->assignRole('turista');
         $admin = User::factory()->create();
         $result = User::turistas()->get();
         $this->assertTrue($result->contains($turista));

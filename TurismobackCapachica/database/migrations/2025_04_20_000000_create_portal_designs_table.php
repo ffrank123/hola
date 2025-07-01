@@ -14,7 +14,9 @@ return new class extends Migration {
             $table->json('typography')->nullable();
             $table->json('sections')->nullable();
             $table->json('translations')->nullable();
+            $table->json('settings')->nullable();
             $table->enum('status', ['borrador', 'publicado'])->default('borrador');
+            $table->string('theme')->nullable();
             $table->timestamps();
         });
     }

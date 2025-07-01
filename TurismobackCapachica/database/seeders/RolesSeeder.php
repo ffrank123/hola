@@ -17,10 +17,11 @@ class RolesSeeder extends Seeder
         $guards = ['web', 'sanctum'];
         foreach ($roles as $role) {
             foreach ($guards as $guard) {
-                \Spatie\Permission\Models\Role::firstOrCreate([
+                $created = \Spatie\Permission\Models\Role::updateOrCreate([
                     'name' => $role,
                     'guard_name' => $guard
                 ]);
+                echo "Role creado: {$role} para guard: {$guard}\n";
             }
         }
 

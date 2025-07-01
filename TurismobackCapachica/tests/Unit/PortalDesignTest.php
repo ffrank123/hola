@@ -16,11 +16,11 @@ class PortalDesignTest extends TestCase
         $portal = Portal::factory()->create();
         $design = PortalDesign::factory()->create([
             'portal_id' => $portal->id,
-            'slider_images' => json_encode(['img1.jpg','img2.jpg']),
-            'colors' => json_encode(['primary'=>'#000']),
-            'typography' => json_encode(['font'=>'Arial']),
-            'sections' => json_encode(['home','about']),
-            'translations' => json_encode(['es'=>'Inicio']),
+            'slider_images' => ['img1.jpg','img2.jpg'],
+            'colors' => ['primary'=>'#000'],
+            'typography' => ['font'=>'Arial'],
+            'sections' => ['home','about'],
+            'translations' => ['es'=>'Inicio'],
         ]);
         $this->assertInstanceOf(Portal::class, $design->portal);
         $this->assertIsArray($design->slider_images);

@@ -16,10 +16,10 @@ class UserBehaviorTest extends TestCase
         $user = User::factory()->create();
         $behavior = UserBehavior::factory()->create([
             'user_id' => $user->id,
-            'preferred_categories' => json_encode(['aventura','cultural']),
-            'viewed_services' => json_encode([1,2]),
-            'clicked_services' => json_encode([3]),
-            'reserved_services' => json_encode([4,5]),
+            'preferred_categories' => ['aventura','cultural'],
+            'viewed_services' => [1,2],
+            'clicked_services' => [3],
+            'reserved_services' => [4,5],
             'action' => 'some_action',
         ]);
         $this->assertInstanceOf(User::class, $behavior->user);

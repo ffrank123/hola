@@ -16,9 +16,8 @@ class CartControllerTest extends TestCase
     /** @test */
     public function can_add_service_to_cart()
     {
-        $category = Category::create(['name' => 'Aventura']);
-        $service = Service::create([
-            'name' => 'Kayak',
+        $category = Category::factory()->create(['name' => 'Aventura']);
+        $service = Service::factory()->create([
             'title' => 'Kayak',
             'price' => 100,
             'status' => 'active',

@@ -15,7 +15,12 @@ class PortalDesignFactory extends Factory
         return [
             'portal_id' => Portal::factory(),
             'theme' => $this->faker->word(),
-            'settings' => json_encode(['color' => $this->faker->safeColorName()]),
+            'settings' => ['color' => 'blue'],
+            'slider_images' => ['img1.jpg', 'img2.jpg'],
+            'colors' => ['primary' => '#000', 'secondary' => '#fff'],
+            'typography' => ['font' => 'Arial'],
+            'sections' => ['home', 'about'],
+            'translations' => ['es' => 'Inicio'],
         ];
     }
 } 

@@ -9,11 +9,12 @@ return new class extends Migration {
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
             $table->foreignId('portal_id')->constrained()->onDelete('cascade');
-            $table->string('slug')->unique();
+            $table->string('slug')->unique()->nullable();
             $table->string('title');
             $table->text('content');
             $table->string('language', 10)->default('es');
             $table->timestamp('published_at')->nullable();
+            $table->enum('status', ['draft', 'published', 'archived'])->default('draft');
             $table->timestamps();
         });
     }

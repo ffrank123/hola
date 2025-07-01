@@ -13,7 +13,7 @@ class LocationTest extends TestCase
 
     public function test_location_relations_and_casts()
     {
-        $location = Location::factory()->create(['galeria' => json_encode(['img1.jpg','img2.jpg'])]);
+        $location = Location::factory()->create(['galeria' => ['img1.jpg','img2.jpg']]);
         $company = Company::factory()->create(['location_id' => $location->id]);
         $this->assertTrue($location->companies->contains($company));
         $this->assertIsArray($location->galeria);

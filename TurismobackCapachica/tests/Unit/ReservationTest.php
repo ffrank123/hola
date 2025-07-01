@@ -24,7 +24,7 @@ class ReservationTest extends TestCase
             'reservation_date' => '2024-07-01',
             'paid_at' => '2024-07-02 10:00:00',
         ]);
-        $payment = Payment::factory()->create(['reservation_id' => $reservation->id]);
+        $payment = Payment::factory()->create(['reservation_id' => $reservation->id, 'method' => 'stripe']);
         $this->assertInstanceOf(User::class, $reservation->user);
         $this->assertInstanceOf(Service::class, $reservation->service);
         $this->assertInstanceOf(Payment::class, $reservation->payment);

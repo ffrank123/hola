@@ -16,6 +16,7 @@ class PageFactory extends Factory
             'portal_id' => Portal::factory(),
             'title' => $this->faker->sentence(3),
             'content' => $this->faker->paragraph(),
+            'slug' => $this->faker->slug(),
             'status' => 'published',
         ];
     }

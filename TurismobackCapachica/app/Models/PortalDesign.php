@@ -20,6 +20,7 @@ class PortalDesign extends Model
         'typography' => 'array',
         'sections' => 'array',
         'translations' => 'array',
+        'settings' => 'array',
     ];
 
     public function portal()

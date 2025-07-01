@@ -13,8 +13,18 @@ class PaymentFactory extends Factory
     public function definition()
     {
         return [
-            'reservation_id' => Reservation::factory(),
-            'method' => 'tarjeta',
+            'reservation_id' => function() {
+                $reservation = Reservation::factory()->create();
+                return $reservation->id;
+            },
+            'user_id' => function(array $attributes) {
+                if (!empty($attributes['reservation_id'])) {
+                    $reservation = \App\Models\Reservation::find($attributes['reservation_id']);
+                    return $reservation ? $reservation->user_id : \App\Models\User::factory();
+                }
+                return \App\Models\User::factory();
+            },
+            'method' => 'stripe',
             'transaction_id' => $this->faker->uuid(),
             'amount' => $this->faker->randomFloat(2, 10, 500),
             'currency' => 'USD',
