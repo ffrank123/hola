@@ -14,6 +14,9 @@ return new class extends Migration
             $table->string('name');
             $table->enum('type', ['comunidad', 'centro_poblado']);
             $table->text('description')->nullable();
+            $table->float('latitude')->nullable();
+            $table->float('longitude')->nullable();
+            $table->string('status')->nullable();
 
             // Descripciones y metadata
             $table->text('descripcion_corta')->nullable();
