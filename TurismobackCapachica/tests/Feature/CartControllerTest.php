@@ -55,8 +55,7 @@ class CartControllerTest extends TestCase
     /** @test */
     public function can_clear_cart()
     {
-        Session::start();
-        session(['cart' => [
+        $this->withSession(['cart' => [
             ['type' => 'service', 'id' => 1, 'title' => 'Kayak', 'price' => 100, 'quantity' => 1]
         ]]);
         $response = $this->postJson('/api/cart/clear');

@@ -78,11 +78,8 @@ class CartController extends Controller
     }
 
     public function clear(Request $request)
-{
-    $request->session()->forget('cart');
-    return response()->json([
-        'message' => 'Carrito vaciado.',
-        'cart'    => []
-    ]);
-}
+    {
+        $request->session()->put('cart', []);
+        return response()->json(['cart' => []]);
+    }
 }

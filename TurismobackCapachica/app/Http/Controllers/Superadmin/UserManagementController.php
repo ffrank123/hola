@@ -124,16 +124,19 @@ class UserManagementController extends Controller
      */
     public function sendMessage(Request $request, $id)
     {
-        $v = Validator::make($request->all(), [
+        $v = \Validator::make($request->all(), [
             'mensaje' => 'required|string|max:1000',
         ]);
         if ($v->fails()) {
             return response()->json(['errors'=>$v->errors()], 422);
         }
 
-        $u = User::findOrFail($id);
-        $u->notify(new AdminMessageNotification($request->input('mensaje')));
-
+        $u = \App\Models\User::findOrFail($id);
+        if (!class_exists(\App\Notifications\AdminMessageNotification::class)) {
+            // Crear notificación básica si no existe
+            \File::put(app_path('Notifications/AdminMessageNotification.php'), "<?php\n\nnamespace App\\Notifications;\n\nuse Illuminate\\Bus\\Queueable;\nuse Illuminate\\Notifications\\Notification;\nuse Illuminate\\Contracts\\Queue\\ShouldQueue;\nuse Illuminate\\Notifications\\Messages\\MailMessage;\n\nclass AdminMessageNotification extends Notification\n{\n    use Queueable;\n    protected $mensaje;\n    public function __construct($mensaje) {\n        $this->mensaje = $mensaje;\n    }\n    public function via($notifiable) {\n        return ['mail'];\n    }\n    public function toMail($notifiable) {\n        return (new MailMessage)\n            ->subject('Mensaje de la administración')\n            ->line($this->mensaje);\n    }\n}\n");
+        }
+        $u->notify(new \App\Notifications\AdminMessageNotification($request->input('mensaje')));
         return response()->json(['message'=>'Mensaje enviado correctamente.']);
     }
 }

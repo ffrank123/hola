@@ -16,13 +16,16 @@ class CalendarControllerTest extends TestCase
     public function it_returns_occupied_dates_for_a_service()
     {
         $service = Service::factory()->create();
-        Reservation::factory()->create([
-            'service_id' => $service->id,
-            'reservation_date' => Carbon::now()->toDateString(),
+        $booking = \App\Models\Booking::factory()->create([
+            'reservation_date' => \Carbon\Carbon::now()->toDateString(),
             'status' => 'confirmed',
+        ]);
+        \App\Models\BookingItem::factory()->create([
+            'booking_id' => $booking->id,
+            'service_id' => $service->id,
         ]);
         $response = $this->getJson('/api/services/' . $service->id . '/calendar');
         $response->assertStatus(200)
-            ->assertJsonFragment([Carbon::now()->toDateString()]);
+            ->assertJsonFragment([\Carbon\Carbon::now()->toDateString()]);
     }
 } 

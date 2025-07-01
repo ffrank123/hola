@@ -30,11 +30,9 @@ class TuristaReservationControllerTest extends TestCase
         $service = Service::factory()->create();
         $this->actingAs($user, 'sanctum');
         $payload = [
-            'user_id' => $user->id,
+            'service_id' => $service->id,
             'reservation_date' => Carbon::now()->addDay()->toDateString(),
-            'people_count' => 2,
-            'status' => 'pending',
-            'total_amount' => 100
+            'people_count' => 2
         ];
         $response = $this->postJson('/api/turista/reservations', $payload);
         $response->assertStatus(201)->assertJsonFragment(['message' => 'Reserva creada']);

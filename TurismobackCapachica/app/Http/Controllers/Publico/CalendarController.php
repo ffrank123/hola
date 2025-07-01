@@ -16,6 +16,7 @@ class CalendarController extends Controller
                          ->whereIn('status', $blocked)
                          ->pluck('reservation_date')
                          ->unique()
+                         ->map(fn($date) => $date instanceof \Carbon\Carbon ? $date->toDateString() : (new \Carbon\Carbon($date))->toDateString())
                          ->values();
         return response()->json($dates, Response::HTTP_OK);
     }
